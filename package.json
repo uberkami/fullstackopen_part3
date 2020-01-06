@@ -1,0 +1,23 @@
+{
+  "name": "part3",
+  "version": "1.0.0",
+  "description": "phonebook backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uberkami/fullstackopen_part3.git"
+  },
+  "author": "maleck",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uberkami/fullstackopen_part3/issues"
+  },
+  "homepage": "https://github.com/uberkami/fullstackopen_part3#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
