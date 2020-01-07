@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const cors = require('cors')
+
+app.use(cors())
 app.use(bodyParser.json())
 
 morgan.token('body', function getBody(req) {
@@ -59,10 +62,15 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    person = persons[0].persons.filter(person => person.id !== id)
+    const deleteId = Number(request.params.id)
+    let personFound = persons[0].persons.find(pers => pers.id === deleteId)
 
-    response.status(204).end()
+    if (personFound){
+    persons[0].persons = persons[0].persons.filter(person => person.id !== deleteId)
+    return (response.status(204).end())
+    } else {
+        return(response.status(404).end())
+    }
 })
 
 app.post('/api/persons', (request, response) => {
@@ -92,7 +100,7 @@ app.post('/api/persons', (request, response) => {
         id: genId
     }
 
-    persons = persons.concat(person)
+    persons[0].persons = persons[0].persons.concat(person)
     response.json(person)
 })
 
@@ -102,7 +110,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/persons', (req, res) => {
-    res.json(persons)
+    res.json(persons[0].persons)
 })
 app.get('/persons', (req, res) => {
     res.json(persons)
