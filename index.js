@@ -2,17 +2,17 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
-// const morgan = require('morgan')
+const morgan = require('morgan')
 const cors = require('cors')
 
 app.use(express.static('build'))
 app.use(cors())
 app.use(bodyParser.json())
 
-// morgan.token('body', function getBody(req) {
-//     return JSON.stringify(req.body)
-// })
-// app.use(morgan(':method :url :response-time :body'))
+morgan.token('body', function getBody(req) {
+    return JSON.stringify(req.body)
+})
+app.use(morgan(':method :url :response-time :body'))
 
 let persons = [{
     "persons": [
@@ -67,11 +67,11 @@ app.delete('/api/persons/:id', (request, response) => {
     const deleteId = Number(request.params.id)
     let personFound = persons[0].persons.find(pers => pers.id === deleteId)
 
-    if (personFound){
-    persons[0].persons = persons[0].persons.filter(person => person.id !== deleteId)
-    return (response.status(204).end())
+    if (personFound) {
+        persons[0].persons = persons[0].persons.filter(person => person.id !== deleteId)
+        return (response.status(204).end())
     } else {
-        return(response.status(404).end())
+        return (response.status(404).end())
     }
 })
 
@@ -126,5 +126,5 @@ app.use(unknownEndpoint)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-console.log(`Server running on port ${PORT}`)
+    console.log(`Server running on port ${PORT}`)
 })
