@@ -16,9 +16,9 @@ morgan.token('body', function getBody(req) {
 app.use(morgan(':method :url :response-time :body'))
 
 app.get('/api/persons', (req, res) => {
-    console.log("Person", Person)
+    // console.log("Person", Person)
     Person.find({}).then(pers => {
-        console.log('pers', pers)
+        // console.log('pers', pers)
         // person list is returned without _id and _v, id is set to _id
         res.json(pers.map(p => p.toJSON()))
     })
@@ -32,7 +32,7 @@ app.get('/info', (req, res) => {
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
+    const id = request.params.id.toString
     Person.findById(id).then(pers => {
         response.json(pers.toJSON())
     }
@@ -40,7 +40,7 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    const deleteId = Number(request.params.id)
+    const deleteId = request.params.id.toString
     let personFound = persons[0].persons.find(pers => pers.id === deleteId)
 
     if (personFound) {

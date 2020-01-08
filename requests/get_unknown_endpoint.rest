@@ -1,1 +1,1 @@
-GET http://localhost:3001/pancake
+GET https://shrouded-mesa-73090.herokuapp.com/pancake
