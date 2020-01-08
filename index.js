@@ -65,7 +65,7 @@ app.post('/api/persons', (request, response) => {
     })
 
     console.log("person in post", person)
-    person.save().then(response => {
+    person.save().then(savedNote => {
         response.json(savedNote.toJSON())
     })
 })
