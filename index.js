@@ -24,6 +24,13 @@ app.get('/api/persons', (req, res) => {
     })
 })
 
+app.get('/info', (req, res) => {
+    const time = Date(Date.now())
+    const count = Person.length
+    console.log('count', count, typeof(count))
+    res.send(`<div>Phonebook has info for ${count} people</div>
+            <div>${time}</div>`)
+})
 app.get('/info1', (req, res) => {
     const time = Date(Date.now())
     const count = Person.collection.count()
