@@ -132,7 +132,7 @@ app.get('/api/persons', (req, res) => {
     console.log("Person", Person)
     Person.find({}).then(pers => {
         console.log('pers', pers)
-        response.json(pers)
+        res.json(pers)
     })
 })
 
