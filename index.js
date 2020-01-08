@@ -132,7 +132,8 @@ app.get('/api/persons', (req, res) => {
     console.log("Person", Person)
     Person.find({}).then(pers => {
         console.log('pers', pers)
-        res.json(pers)
+        // person list is returned without _id and _v, id is set to _id
+        res.json(pers.map(p => p.toJSON()))
     })
 })
 
@@ -146,6 +147,14 @@ const unknownEndpoint = (request, response) => {
 }
 
 app.use(unknownEndpoint)
+
+personSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+      returnedObject.id = returnedObject._id.toString()
+      delete returnedObject._id
+      delete returnedObject.__v
+    }
+  })
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
