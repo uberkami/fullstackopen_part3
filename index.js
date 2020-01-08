@@ -15,7 +15,8 @@ morgan.token('body', function getBody(req) {
 app.use(morgan(':method :url :response-time :body'))
 
 const mongoose = require('mongoose')
-const password = process.env.REACT_APP_DB_PW
+// const password = process.env.REACT_APP_DB_PW
+const password = "first_user"
 // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 const url =`mongodb+srv://first_user:${password}@atlasdb-nz7qo.mongodb.net/people?retryWrites=true&w=majority`
 
@@ -128,7 +129,9 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/persons', (req, res) => {
+    console.log("Person", Person)
     Person.find({}).then(pers => {
+        console.log('pers', pers)
         response.json(pers)
     })
 })
