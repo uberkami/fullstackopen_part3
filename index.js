@@ -32,7 +32,7 @@ app.get('/info', (req, res) => {
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    const id = request.params.id.toString
+    const id = request.params.id
     Person.findById(id).then(pers => {
         response.json(pers.toJSON())
     }
@@ -40,7 +40,7 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    const deleteId = request.params.id.toString
+    const deleteId = request.params.id
     let personFound = persons[0].persons.find(pers => pers.id === deleteId)
 
     if (personFound) {
