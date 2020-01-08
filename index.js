@@ -33,16 +33,14 @@ app.get('/info', (req, res) => {
 
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
-    console.log('id', id, typeof(id))
-    const idFound = Person.findById(id)
-    console.log('idFound', idFound, typeof(idFound))
-    if (idFound) {
-        Person.findById(id).then(pers => {
-            return response.json(pers.toJSON())
+    Person.findById(id)
+        .then(pers => {
+            response.json(pers.toJSON())
         })
-    } else {
-        return (response.status(404).end())
-    }
+        .catch(error => {
+            console.log(error);
+            response.status(404).end()
+        })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
