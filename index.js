@@ -17,9 +17,8 @@ app.use(morgan(':method :url :response-time :body'))
 const mongoose = require('mongoose')
 const password = process.env.REACT_APP_DB_PW
 // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
-const url =
-  `mongodb+srv://first_user:${password}@atlasdb-nz7qo.mongodb.net/people?retryWrites=true&w=majority`
-  
+const url =`mongodb+srv://first_user:${password}@atlasdb-nz7qo.mongodb.net/people?retryWrites=true&w=majority`
+
 
 mongoose.connect(url, { useNewUrlParser: true })
 
@@ -131,7 +130,7 @@ app.get('/', (req, res) => {
 app.get('/api/persons', (req, res) => {
     Person.find({}).then(pers => {
         response.json(pers)
-})
+    })
 })
 
 
