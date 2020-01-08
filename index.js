@@ -34,6 +34,8 @@ app.get('/info', (req, res) => {
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
     const idFound = Person.find(pers => {
+        console.log(id, typeof(id))
+        console.log(pers, pers.id)
         return (pers.id === id)
     })
     if (idFound) {
