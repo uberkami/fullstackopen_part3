@@ -36,7 +36,8 @@ app.get('/api/persons/:id', (request, response) => {
     Person.findById(id).then(pers => {
         response.json(pers.toJSON())
     }
-)})
+    )
+})
 
 app.delete('/api/persons/:id', (request, response) => {
     const deleteId = Number(request.params.id)
@@ -58,10 +59,12 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    const person = {
+    const person = new Person({
         name: body.name,
-        number: body.number
-    }
+        number: body.number,
+    })
+
+    console.log("person in post", person)
     person.save().then(response => {
         response.json(savedNote.toJSON())
     })
