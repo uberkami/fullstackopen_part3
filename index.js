@@ -30,6 +30,7 @@ app.get('/info', (req, res) => {
     res.send(`<div>Phonebook has info for ${per.length} ${pers.length === 1 ? 'person' : 'people'}</div>
             <div>${time}</div>`)
 })
+})
 
 
 app.get('/api/persons/:id', (request, response) => {
