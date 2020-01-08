@@ -27,7 +27,7 @@ app.get('/api/persons', (req, res) => {
 app.get('/info', (req, res) => {
     const time = Date(Date.now())
     Person.find({}).then(pers => {
-    res.send(`<div>Phonebook has info for ${per.length} ${pers.length === 1 ? 'person' : 'people'}</div>
+    res.send(`<div>Phonebook has info for ${pers.length} ${pers.length === 1 ? 'person' : 'people'}</div>
             <div>${time}</div>`)
 })
 })
