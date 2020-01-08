@@ -24,13 +24,42 @@ app.get('/api/persons', (req, res) => {
     })
 })
 
-app.get('/info', (req, res) => {
+app.get('/info1', (req, res) => {
     const time = Date(Date.now())
-    const count = people.people.count()
+    const count = Person.collection.count()
     console.log('count', count, typeof(count))
     res.send(`<div>Phonebook has info for ${count} people</div>
             <div>${time}</div>`)
 })
+app.get('/info2', (req, res) => {
+    const time = Date(Date.now())
+    const count = Person.people.count()
+    console.log('count', count, typeof(count))
+    res.send(`<div>Phonebook has info for ${count} people</div>
+            <div>${time}</div>`)
+})
+app.get('/info3', (req, res) => {
+    const time = Date(Date.now())
+    const count = Person.collection(people).count()
+    console.log('count', count, typeof(count))
+    res.send(`<div>Phonebook has info for ${count} people</div>
+            <div>${time}</div>`)
+})
+app.get('/info4', (req, res) => {
+    const time = Date(Date.now())
+    const count = Person.collection('people').count()
+    console.log('count', count, typeof(count))
+    res.send(`<div>Phonebook has info for ${count} people</div>
+            <div>${time}</div>`)
+})
+app.get('/info5', (req, res) => {
+    const time = Date(Date.now())
+    const count = Person.collection.find('name').count()
+    console.log('count', count, typeof(count))
+    res.send(`<div>Phonebook has info for ${count} people</div>
+            <div>${time}</div>`)
+})
+
 
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
