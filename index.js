@@ -26,7 +26,11 @@ app.get('/api/persons', (req, res) => {
 
 app.get('/info', (req, res) => {
     const time = Date(Date.now())
-    let count = Person.find({}).then(pers => pers.length)
+    let count = 0
+    Person.find({}).then(pers => {
+        console.log('pers.length', pers.length)
+        count = pers.length
+        return null })
     console.log('count', count, typeof(count))
     res.send(`<div>Phonebook has info for ${count} people</div>
             <div>${time}</div>`)
