@@ -14,6 +14,23 @@ morgan.token('body', function getBody(req) {
 })
 app.use(morgan(':method :url :response-time :body'))
 
+const mongoose = require('mongoose')
+const password = process.env.REACT_APP_DB_PW
+// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
+const url =
+  `mongodb+srv://first_user:${password}@atlasdb-nz7qo.mongodb.net/people?retryWrites=true&w=majority`
+  
+
+mongoose.connect(url, { useNewUrlParser: true })
+
+const personSchema = new mongoose.Schema({
+    name: String,
+    number: String,
+    id: Number,
+})
+
+const Person = mongoose.model('Person', personSchema)
+
 let persons = [{
     "persons": [
         {
@@ -112,8 +129,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/persons', (req, res) => {
-    res.json(persons[0].persons)
+    Person.find({}).then(pers => {
+        response.json(pers)
 })
+})
+
+
 app.get('/persons', (req, res) => {
     res.json(persons)
 })
