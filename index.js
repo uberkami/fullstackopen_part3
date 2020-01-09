@@ -4,7 +4,9 @@ const app = express()
 const bodyParser = require('body-parser')
 const Person = require('./models/person')
 const morgan = require('morgan')
+const cors = require('cors')
 
+app.use(cors())
 
 app.use(express.static('build'))
 app.use(bodyParser.json())
@@ -61,7 +63,6 @@ app.post('/api/persons', (request, response, next) => {
         number: body.number,
     })
 
-    console.log("person in post", person)
     person.save()
         .then(savedNote => {
             response.json(savedNote.toJSON())
