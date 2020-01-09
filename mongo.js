@@ -30,16 +30,16 @@ if (name && number) {
         id: `${randomId}`
     })
 
-    person.save().then(response => {
+    person.save().then(() => {
         console.log(`added ${name} number ${number} to phonebook`)
         mongoose.connection.close()
     })
 } else {
     Person.find({}).then(result => {
-        console.log(`phonebook:`)
+        console.log('phonebook:')
         result.forEach(pers => {
             console.log(pers.name, pers.number)
-         })
+        })
         mongoose.connection.close()
     })
 }
