@@ -4,10 +4,8 @@ const app = express()
 const bodyParser = require('body-parser')
 const Person = require('./models/person')
 const morgan = require('morgan')
-// const cors = require('cors')
 
 app.use(express.static('build'))
-// app.use(cors())
 app.use(bodyParser.json())
 
 morgan.token('body', function getBody(req) {
@@ -23,14 +21,11 @@ app.get('/api/persons', (req, res) => {
 
 app.get('/info', (req, res) => {
     const time = Date(Date.now())
-    console.log('time1', time)
-    console.log(new Date())
     Person.find({}).then(pers => {
         res.send(`<div>Phonebook has info for ${pers.length} ${pers.length === 1 ? 'person' : 'people'}</div>
             <div>${time}</div>`)
     })
 })
-
 
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
@@ -75,6 +70,7 @@ app.post('/api/persons', (request, response) => {
         response.json(savedNote.toJSON())
     })
 })
+
 app.put('/api/persons/:id', (request, response, next) => {
     const body = request.body
 
@@ -89,13 +85,6 @@ app.put('/api/persons/:id', (request, response, next) => {
         })
         .catch(error => next(error))
 })
-
-
-app.get('/', (req, res) => {
-    res.send(
-        '<h1>Hello World!?</h1><a href="/info">Info</a>')
-})
-
 
 const errorHandler = (error, request, response, next) => {
     console.error(error.message)
@@ -114,9 +103,6 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 app.use(errorHandler)
-
-
-
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
