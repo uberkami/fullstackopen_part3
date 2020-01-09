@@ -16,20 +16,19 @@ morgan.token('body', function getBody(req) {
 app.use(morgan(':method :url :response-time :body'))
 
 app.get('/api/persons', (req, res) => {
-    // console.log("Person", Person)
     Person.find({}).then(pers => {
-        // console.log('pers', pers)
-        // person list is returned without _id and _v, id is set to _id
         res.json(pers.map(p => p.toJSON()))
     })
 })
 
 app.get('/info', (req, res) => {
     const time = Date(Date.now())
+    console.log('time1', time)
+    console.log(new Date())
     Person.find({}).then(pers => {
-    res.send(`<div>Phonebook has info for ${pers.length} ${pers.length === 1 ? 'person' : 'people'}</div>
+        res.send(`<div>Phonebook has info for ${pers.length} ${pers.length === 1 ? 'person' : 'people'}</div>
             <div>${time}</div>`)
-})
+    })
 })
 
 
