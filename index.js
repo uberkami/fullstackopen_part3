@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const Person = require('./models/person')
 const morgan = require('morgan')
 
+
 app.use(express.static('build'))
 app.use(bodyParser.json())
 
@@ -52,13 +53,8 @@ app.delete('/api/persons/:id', (request, response) => {
         .catch(error => next(error))
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const body = request.body
-    if (!body.name || !body.number) {
-        return response.status(400).json({
-            error: 'Name or number missing'
-        })
-    }
 
     const person = new Person({
         name: body.name,
@@ -66,9 +62,11 @@ app.post('/api/persons', (request, response) => {
     })
 
     console.log("person in post", person)
-    person.save().then(savedNote => {
-        response.json(savedNote.toJSON())
-    })
+    person.save()
+        .then(savedNote => {
+            response.json(savedNote.toJSON())
+        })
+        .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -86,15 +84,7 @@ app.put('/api/persons/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-const errorHandler = (error, request, response, next) => {
-    console.error(error.message)
 
-    if (error.name === 'CastError' && error.kind === 'ObjectId') {
-        return response.status(400).send({ error: 'malformatted id' })
-    }
-
-    next(error)
-}
 
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
@@ -102,6 +92,16 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint)
 
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+        return response.status(400).send({ error: 'malformatted id' })
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).json({ error: error.message })
+    }
+    next(error)
+}
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
