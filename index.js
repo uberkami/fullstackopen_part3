@@ -30,7 +30,7 @@ app.get('/info', (req, res) => {
     })
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     const id = request.params.id
     Person.findById(id)
         .then(pers => {
@@ -41,17 +41,15 @@ app.get('/api/persons/:id', (request, response) => {
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log(error)
             return next(error)
         })
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
     const deleteId = request.params.id
     Person.findByIdAndDelete(deleteId)
-        .then(result => {
-            response.status(204).end()
-        })
+        .then(response.status(204).end())
         .catch(error => next(error))
 })
 
@@ -84,8 +82,6 @@ app.put('/api/persons/:id', (request, response, next) => {
         })
         .catch(error => next(error))
 })
-
-
 
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
